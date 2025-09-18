@@ -9,7 +9,7 @@ public:
 
     instance(uintptr_t addr) : address(addr) {}
 
-    std::string get_name() const {
+    std::string get_name() const { 
         uintptr_t name_ptr = memory::read<uintptr_t>(address + offsets::name);
         if (!name_ptr) return "";
         return memory::read_string(name_ptr);
