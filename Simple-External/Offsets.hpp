@@ -4,10 +4,13 @@
 namespace offsets {
 
 	// Instance
+    inline uintptr_t This = 0x8;
     inline uintptr_t name = 0x88;
     inline uintptr_t parent = 0x58;
     inline uintptr_t children = 0x68;
     inline uintptr_t children_end = 0x8;
+    inline uintptr_t Gravity = 0x1AC;
+    inline uintptr_t GravityInfo = 0x3d8;
 
     // Player
     inline uintptr_t localplayer = 0x128;

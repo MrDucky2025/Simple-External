@@ -15,6 +15,9 @@ int main() {
 	rbx::set_jumppower(200.0f);
 	std::cout << "Jump power set to 200.\n";
 
+	rbx::set_gravity(50.0f);
+	std::cout << "Gravity set to 50.\n";
+
     system("pause");
     return 0;
 }

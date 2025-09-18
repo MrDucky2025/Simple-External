@@ -1,7 +1,9 @@
 ﻿#pragma once
 #include "instance.hpp"
+#include <iostream>
 
 namespace rbx {
+
     inline instance get_datamodel() {
         uintptr_t base = memory::get_module_base(L"RobloxPlayerBeta.exe");
         uintptr_t fake_dm = memory::read<uintptr_t>(base + offsets::fakedatamodel);
@@ -30,12 +32,32 @@ namespace rbx {
 
     inline void set_walkspeed(float speed) {
         instance humanoid = get_local_humanoid();
+        if (!humanoid.valid()) return;
         memory::write<float>(humanoid.address + offsets::walkspeed, speed);
         memory::write<float>(humanoid.address + offsets::walkspeedcheck, speed);
     }
 
     inline void set_jumppower(float power) {
         instance humanoid = get_local_humanoid();
+        if (!humanoid.valid()) return;
         memory::write<float>(humanoid.address + offsets::jumppower, power);
     }
+
+    inline bool set_gravity(float g) {
+        instance workspace = get_service("Workspace");
+        if (!workspace.valid()) return false;
+
+        uintptr_t ptr1 = memory::read<uintptr_t>(workspace.address + offsets::This);
+        if (!ptr1) return false;
+
+        uintptr_t ptr2 = memory::read<uintptr_t>(ptr1 + offsets::GravityInfo);
+        if (!ptr2) return false;
+
+        uintptr_t gravity_addr = ptr2 + offsets::Gravity;
+        memory::write<float>(gravity_addr, g);
+
+        float verify = memory::read<float>(gravity_addr);
+        return (verify == g);
+    }
+
 }

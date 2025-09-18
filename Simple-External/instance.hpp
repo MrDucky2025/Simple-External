@@ -9,13 +9,13 @@ public:
 
     instance(uintptr_t addr) : address(addr) {}
 
-    std::string get_name() const {  // <-- made const
+    std::string get_name() const {
         uintptr_t name_ptr = memory::read<uintptr_t>(address + offsets::name);
         if (!name_ptr) return "";
         return memory::read_string(name_ptr);
     }
 
-    std::vector<instance> get_children() const {  // <-- made const
+    std::vector<instance> get_children() const {
         std::vector<instance> children;
         uintptr_t start = memory::read<uintptr_t>(address + offsets::children);
         uintptr_t end = memory::read<uintptr_t>(start + offsets::children_end);
